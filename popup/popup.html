@@ -436,14 +436,7 @@ button.secondary:hover {
         <p class="tagline">Your ultimate companion for machine learning preparation</p>
         
         <!-- Explanation Level Selector -->
-        <div class="level-selector">
-            <label for="explanation-level">Explanation Level:</label>
-            <select id="explanation-level">
-                <option value="beginner">Beginner - Simple explanations with analogies</option>
-                <option value="intermediate" selected>Intermediate - Balanced technical detail</option>
-                <option value="advanced">Advanced - In-depth technical analysis</option>
-            </select>
-        </div>
+        
 
         <div class="tab-container">
             <div class="tab" data-tab="concept-explainer">Concept Explainer</div>
@@ -466,9 +459,10 @@ button.secondary:hover {
                     <p>Researching the concept...</p>
                 </div>
                 <div class="result-container" id="concept-result">
-                    <div class="result-title">Concept Explanation</div>
-                    <div class="result-content" id="concept-explanation"></div>
+                    <div class="result-title" id="concept-result">Concept Explanation</div>
+                    
                 </div>
+                <div class="result-content" id="concept-explanation"></div>
             </div>
         </div>
 
@@ -488,8 +482,9 @@ button.secondary:hover {
                 </div>
                 <div class="result-container" id="code-result">
                     <div class="result-title">Code Explanation</div>
-                    <div class="result-content" id="code-explanation"></div>
+                    
                 </div>
+                <div class="result-content" id="code-explanation"></div>
             </div>
         </div>
 
@@ -497,7 +492,7 @@ button.secondary:hover {
         <div class="tab-content" id="summarizer">
             <div class="section">
                 <h2 class="section-title">📄 Summarize Content</h2>
-                <p>Paste ML blog posts, research papers, or forum discussions to get a concise summary:</p>
+                <p>Paste ML blog posts to get a concise summary:</p>
                 <textarea id="content-input" placeholder="Paste your ML-related content here..."></textarea>
                 <div class="button-group">
                     <button id="summarize-btn">📝 Summarize</button>
