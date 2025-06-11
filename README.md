@@ -1,4 +1,4 @@
-# ML Buddy - Your Personal Machine Learning Learning Assistant 🚀
+# ML Buddy - Your Machine Learning Learning Assistant 🚀
 
 **ML Buddy** is a Chrome Extension built to simplify your Machine Learning learning journey by providing on-the-fly explanations, code analysis, and blog summarization — right inside your browser!
 
