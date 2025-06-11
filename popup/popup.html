@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Buddy - Your Machine Learning Companion</title>
+    <style>
+:root {
+    /* Keeping your original color variables */
+    --primary-color: #4a6fa5;
+    --primary-light: #e1e8f2;
+    --secondary-color: #166088;
+    --secondary-light: #e1edf5;
+    --accent-color: #4fc3f7;
+    --accent-light: #e6f7ff;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+    --gray-color: #6c757d;
+    --light-gray: #e9ecef;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    
+    /* Updated design variables */
+    --border-radius: 16px;
+    --border-radius-sm: 8px;
+    --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --box-shadow-md: 0 8px 30px rgba(0, 0, 0, 0.12);
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+    width: 400px;
+    height: 600px;
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--accent-light) 100%);
+    color: var(--dark-color);
+    padding: 16px;
+    overflow-y: auto;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Header Styles */
+header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 8px;
+    padding: 12px 16px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    border: var(--glass-border);
+}
+
+.logo {
+    width: 48px;
+    height: 48px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.header-text {
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+
+.tagline {
+    font-size: 0.85rem;
+    color: var(--gray-color);
+    font-weight: 400;
+    opacity: 0.9;
+}
+
+/* Level Selector Styles */
+.level-selector {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius-sm);
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: var(--box-shadow);
+    border: var(--glass-border);
+}
+
+.level-selector label {
+    display: block;
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.level-selector select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: var(--border-radius-sm);
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--dark-color);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    outline: none;
+}
+
+.level-selector select:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.2);
+    background: white;
+}
+
+.level-selector select:hover {
+    border-color: var(--primary-color);
+}
+
+/* Tab Styles - Modern Glass Tabs */
+.tab-container {
+    display: flex;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    padding: 6px;
+    box-shadow: var(--box-shadow);
+    border: var(--glass-border);
+    margin-bottom: 16px;
+}
+
+.tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--gray-color);
+    transition: var(--transition);
+    font-size: 0.9rem;
+    border-radius: var(--border-radius-sm);
+    text-align: center;
+    flex: 1;
+    position: relative;
+    z-index: 1;
+}
+
+.tab.active {
+    color: var(--primary-color);
+    background: white;
+    box-shadow: 0 2px 8px rgba(74, 111, 165, 0.15);
+    font-weight: 600;
+}
+
+.tab:hover:not(.active) {
+    color: var(--dark-color);
+}
+
+/* Tab Content - FIXED: Proper display rules */
+.tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Section Styles - Glass Cards */
+.section {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: var(--box-shadow);
+    border: var(--glass-border);
+    transition: var(--transition);
+}
+
+.section:hover {
+    box-shadow: var(--box-shadow-md);
+    transform: translateY(-2px);
+}
+
+.section-title {
+    font-size: 1.15rem;
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 8px;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: var(--accent-color);
+    border-radius: 3px;
+}
+
+.section-title i {
+    color: var(--accent-color);
+    font-size: 1.3rem;
+}
+
+/* Form Elements */
+textarea, input[type="text"] {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: var(--border-radius-sm);
+    margin-bottom: 16px;
+    resize: vertical;
+    min-height: 120px;
+    transition: var(--transition);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+textarea:focus, input[type="text"]:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.2);
+    background: white;
+}
+
+/* Button Styles - Modern with subtle gradient */
+button {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    font-weight: 500;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(74, 111, 165, 0.2);
+}
+
+button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 111, 165, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(74, 111, 165, 0.2);
+}
+
+button.secondary {
+    background: white;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-light);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+button.secondary:hover {
+    background: var(--primary-light);
+    border-color: var(--primary-color);
+    color: var(--secondary-color);
+    box-shadow: 0 4px 12px rgba(74, 111, 165, 0.15);
+}
+
+.button-group {
+    display: flex;
+    gap: 12px;
+}
+
+.button-group button {
+    flex: 1;
+}
+
+/* Result Container - Modern with accent border */
+.result-container {
+    margin-top: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: var(--border-radius-sm);
+    border-left: 4px solid var(--accent-color);
+    display: none;
+    box-shadow: var(--box-shadow);
+    animation: fadeIn 0.4s ease-out;
+    position: relative;
+}
+
+.result-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(135deg, rgba(79, 195, 247, 0.03) 0%, rgba(79, 195, 247, 0.01) 100%);
+    pointer-events: none;
+}
+
+.result-title {
+    font-weight: 600;
+    margin-bottom: 14px;
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.05rem;
+}
+
+.result-content {
+    line-height: 1.7;
+    color: var(--dark-color);
+}
+
+/* Loading State */
+.loading {
+    display: none;
+    text-align: center;
+    padding: 24px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    border: var(--glass-border);
+}
+
+.loading-spinner {
+    border: 3px solid rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    border-top: 3px solid var(--primary-color);
+    width: 28px;
+    height: 28px;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto;
+}
+
+.loading-text {
+    margin-top: 12px;
+    color: var(--gray-color);
+    font-size: 0.9rem;
+}
+
+/* Footer - Glass Footer */
+.footer {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--gray-color);
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    padding: 16px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    border: var(--glass-border);
+}
+
+/* Animations */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 480px) {
+    body {
+        padding: 12px;
+    }
+    
+    .section {
+        padding: 18px;
+    }
+    
+    .tab {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ML Buddy</h1>
+        </header>
+        <p class="tagline">Your ultimate companion for machine learning preparation</p>
+        
+        <!-- Explanation Level Selector -->
+        <div class="level-selector">
+            <label for="explanation-level">Explanation Level:</label>
+            <select id="explanation-level">
+                <option value="beginner">Beginner - Simple explanations with analogies</option>
+                <option value="intermediate" selected>Intermediate - Balanced technical detail</option>
+                <option value="advanced">Advanced - In-depth technical analysis</option>
+            </select>
+        </div>
+
+        <div class="tab-container">
+            <div class="tab" data-tab="concept-explainer">Concept Explainer</div>
+            <div class="tab active" data-tab="code-explainer">Code Explainer</div>
+            <div class="tab" data-tab="summarizer">Content Summarizer</div>
+        </div>
+
+        <!-- Concept Explainer Tab -->
+        <div class="tab-content" id="concept-explainer">
+            <div class="section">
+                <h2 class="section-title">🧠 Explain ML Concept</h2>
+                <p>Enter a machine learning concept you'd like explained:</p>
+                <input type="text" id="concept-input" placeholder="e.g., gradient descent, random forests, CNN...">
+                <div class="button-group">
+                    <button id="explain-concept-btn">📖 Explain Concept</button>
+                    <button class="secondary" id="clear-concept-btn">🗑️ Clear</button>
+                </div>
+                <div class="loading" id="concept-loading">
+                    <div class="loading-spinner"></div>
+                    <p>Researching the concept...</p>
+                </div>
+                <div class="result-container" id="concept-result">
+                    <div class="result-title">Concept Explanation</div>
+                    <div class="result-content" id="concept-explanation"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Code Explainer Tab (shown by default) -->
+        <div class="tab-content active" id="code-explainer">
+            <div class="section">
+                <h2 class="section-title">💻 Explain ML Code</h2>
+                <p>Paste your machine learning code below to get a detailed explanation:</p>
+                <textarea id="code-input" placeholder="Paste your Python/R/Julia ML code here..."></textarea>
+                <div class="button-group">
+                    <button id="explain-code-btn">💡 Explain Code</button>
+                    <button class="secondary" id="clear-code-btn">🗑️ Clear</button>
+                </div>
+                <div class="loading" id="code-loading">
+                    <div class="loading-spinner"></div>
+                    <p>Analyzing your code...</p>
+                </div>
+                <div class="result-container" id="code-result">
+                    <div class="result-title">Code Explanation</div>
+                    <div class="result-content" id="code-explanation"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Summarizer Tab -->
+        <div class="tab-content" id="summarizer">
+            <div class="section">
+                <h2 class="section-title">📄 Summarize Content</h2>
+                <p>Paste ML blog posts, research papers, or forum discussions to get a concise summary:</p>
+                <textarea id="content-input" placeholder="Paste your ML-related content here..."></textarea>
+                <div class="button-group">
+                    <button id="summarize-btn">📝 Summarize</button>
+                    <button class="secondary" id="clear-content-btn">🗑️ Clear</button>
+                </div>
+                <div class="loading" id="summary-loading">
+                    <div class="loading-spinner"></div>
+                    <p>Processing the content...</p>
+                </div>
+                <div class="result-container" id="summary-result">
+                    <div class="result-title">Summary</div>
+                    <div class="result-content" id="summary-content"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>ML Buddy v1.0 · Your AI-powered Machine Learning Assistant</p>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
