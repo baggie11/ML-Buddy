@@ -8,7 +8,8 @@
     "storage",
     "activeTab",
     "scripting",
-    "contextMenus"
+    "contextMenus",
+    "sidePanel"
   ],
   "background": {
     "service_worker": "background.js"
@@ -25,18 +26,17 @@
     {
       "resources": [
         "popup/popup.html",
-        "popup/popup.js",
-        "icons/*",
-        "assets/*"
+        "popup/popup.js"
       ],
       "matches": ["<all_urls>"],
       "use_dynamic_url": true
     }
   ],
   "action": {
-    "default_popup": "popup/popup.html",
-
     "default_title": "ML Buddy"
+  },
+  "side_panel": {
+    "default_path": "popup/popup.html"
   },
   "commands": {
     "_execute_action": {

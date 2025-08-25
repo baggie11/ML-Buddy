@@ -1,3 +1,9 @@
+chrome.action.onClicked.addListener((tab) => {
+  chrome.sidePanel.open({ tabId: tab.id });
+});
+
+
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === 'summarizeContent') {
         summarizeViaFlask(request.data)
